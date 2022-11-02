@@ -1,8 +1,8 @@
 import csv
+import sys
 
-
-inputFileName = input("Enter the name of the input file: ")
-outputFileName = input("Enter the name of the output file: ")
+inputFileName = input(sys.argv[1])
+outputFileName = input(sys.argv[2])
 
 
 # inputFileName = "input_file.csv"
