@@ -1,1 +1,3 @@
 inputFileName = input()
+outputFileName = input()
+
