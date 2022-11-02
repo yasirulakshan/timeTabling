@@ -58,6 +58,7 @@ while subject_finalized < len(inpt):
                     subject.choosenRoom = rooms[0]
                     subject_finalized += 1
                     timeGot = True
+                    break
                 else:
                     timeCount = findCount(optional, time)
                     if timeCount < len(rooms):
@@ -66,6 +67,7 @@ while subject_finalized < len(inpt):
                         subject.choosenRoom = rooms[timeCount]
                         subject_finalized += 1
                         timeGot = True
+                        break
 
     if not timeGot:
         if subject.varient == "c":
