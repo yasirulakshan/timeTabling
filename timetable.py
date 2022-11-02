@@ -6,12 +6,13 @@ import csv
 
 
 class Subject:
-    def __init__(self, id, varient, timeSlots, choosenTimeSlot, choosenRoom):
+    def __init__(self, id, varient, timeSlots, choosenTimeSlot, choosenRoom, preChecked):
         self.id = id
         self.varient = varient
         self.timeSlots = timeSlots
         self.choosenTimeSlot = choosenTimeSlot
         self.choosenRoom = choosenRoom
+        self.preChecked = preChecked
 
 
 def findCount(arr, element):
@@ -39,7 +40,7 @@ rooms = inpt.pop(-1)
 subjects = []
 
 for i in inpt:
-    subjects.append(Subject(i[0], i[1], i[2:], None, None))
+    subjects.append(Subject(i[0], i[1], i[2:], None, None, []))
 
 compalsory = []
 optional = []
@@ -50,12 +51,17 @@ while subject_finalized < len(inpt):
     subject = subjects[subject_finalized]
     timeGot = False
     for time in subject.timeSlots:
-        if subject.choosenTimeSlot is None or time not in subject.choosenTimeSlot:
+        if subject.preChecked == [] or time not in subject.preChecked:
+            if subject.choosenTimeSlot in compalsory:
+                compalsory.remove(subject.choosenTimeSlot)
+            elif subject.choosenTimeSlot in optional:
+                optional.remove(subject.choosenTimeSlot)
             if time not in compalsory:
                 if subject.varient == "c":
                     compalsory.append(time)
                     subject.choosenTimeSlot = time
                     subject.choosenRoom = rooms[0]
+                    subject.preChecked.append(time)
                     subject_finalized += 1
                     timeGot = True
                     break
@@ -65,12 +71,16 @@ while subject_finalized < len(inpt):
                         optional.append(time)
                         subject.choosenTimeSlot = time
                         subject.choosenRoom = rooms[timeCount]
+                        subject.preChecked.append(time)
                         subject_finalized += 1
                         timeGot = True
                         break
 
     if not timeGot:
-        if subject.varient == "c":
+        if len(subject.preChecked) == len(subject.timeSlots):
+            subject.preChecked = []
+
+        if subject.varient == 'c':
             if subject.choosenTimeSlot in compalsory:
                 compalsory.remove(subject.choosenTimeSlot)
         else:
