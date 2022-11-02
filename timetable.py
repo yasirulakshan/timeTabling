@@ -21,6 +21,7 @@ def findCount(arr, element):
             count += 1
     return count
 
+
 inputFileName = "input_file.csv"
 outputFileName = "output_file.csv"
 
@@ -49,15 +50,33 @@ while subject_finalized < len(inpt):
     subject = subjects[subject_finalized]
     timeGot = False
     for time in subject.timeSlots:
-        if time not in compalsory:
-            if subject.varient == "c":
-                compalsory.append(time)
-                subject.choosenTimeSlot = time
-                timeGot = True
-            else:
-
+        if subject.choosenTimeSlot is None or time not in subject.choosenTimeSlot:
+            if time not in compalsory:
+                if subject.varient == "c":
+                    compalsory.append(time)
+                    subject.choosenTimeSlot = time
+                    subject.choosenRoom = rooms[0]
+                    subject_finalized += 1
+                    timeGot = True
+                else:
+                    timeCount = findCount(optional, time)
+                    if timeCount < len(rooms):
+                        optional.append(time)
+                        subject.choosenTimeSlot = time
+                        subject.choosenRoom = rooms[timeCount]
+                        subject_finalized += 1
+                        timeGot = True
 
     if not timeGot:
+        if subject.varient == "c":
+            if subject.choosenTimeSlot in compalsory:
+                compalsory.remove(subject.choosenTimeSlot)
+        else:
+            if subject.choosenTimeSlot in optional:
+                optional.remove(subject.choosenTimeSlot)
         subject.choosenTimeSlot = None
+        subject.choosenRoom = None
         subject_finalized -= 1
 
+for subject in subjects:
+    print(subject.id, subject.choosenTimeSlot, subject.choosenRoom)
