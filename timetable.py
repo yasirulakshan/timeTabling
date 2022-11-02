@@ -1,8 +1,8 @@
 import csv
 import sys
 
-inputFileName = input(sys.argv[1])
-outputFileName = input(sys.argv[2])
+inputFileName = sys.argv[1]
+outputFileName = sys.argv[2]
 
 
 # inputFileName = "input_file.csv"
