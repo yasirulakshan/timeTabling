@@ -1,8 +1,12 @@
 import csv
 
 
-# inputFileName = input("Enter the name of the input file: ")
-# outputFileName = input("Enter the name of the output file: ")
+inputFileName = input("Enter the name of the input file: ")
+outputFileName = input("Enter the name of the output file: ")
+
+
+# inputFileName = "input_file.csv"
+# outputFileName = "output_file.csv"
 
 
 class Subject:
@@ -21,10 +25,6 @@ def findCount(arr, element):
         if arr[i] == element:
             count += 1
     return count
-
-
-inputFileName = "input_file.csv"
-outputFileName = "output_file.csv"
 
 inpt = []
 
@@ -90,5 +90,10 @@ while subject_finalized < len(inpt):
         subject.choosenRoom = None
         subject_finalized -= 1
 
+writeFile = open(outputFileName, 'w')
+
+writer = csv.writer(writeFile, lineterminator='\n')
+
 for subject in subjects:
-    print(subject.id, subject.choosenTimeSlot, subject.choosenRoom)
+    r = [subject.id, subject.choosenTimeSlot, subject.choosenRoom]
+    writer.writerow(r)
